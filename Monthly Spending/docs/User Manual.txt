@@ -1,0 +1,45 @@
+Update Monthly Spending Steps
+
+Log into Wells Fargo online
+In the menu 
+Select Plan & Learn
+Select View Spending Report
+
+In the Accounts Included in Your Reports
+Select Edit Accounts
+
+Check the appropriate acounts to include
+and uncheck the others
+Click the Save button
+Scroll down to Get your detailed spending report
+Choose either Past 18 months or Year-End Report:2019
+Click the Download in Excel
+Exit Wells Fargo online
+
+Rename each of the downloaded files to the same name as one of the accounts 
+and move it to the ...\Budget\2020\Source Files folder
+Open the file and rename the worksheet tab to Spending
+Save the files as Excel Workbook
+
+Open the Monthly Spending.xlsm file
+The Monthly Spending Report form will appear centered on the workbook.
+
+Initializing the destination workbook 
+If you did not created a workbook for your monthly spending, create a new blank workbook and save it in the appropriate folder.
+Choose it as the destination file in the Monthly Spending Report form.
+
+If you have a Combined file downloaded from Wells Fargo, select it as your source file first. It will contain the most categories and sub-categories.
+
+Click the Init Destination File button.
+This will initialize the your destination file to update your spending for each worksheet's month.
+A dialog box will appear asking if you want to save changes to your initialized workbook.
+Click Save, this will save and close the workbook.
+
+Select the appropriate Group tab and account, same as the source file, to update.
+Select the month to update.
+Click Create Report.
+This will open the destination file and insert the spending in the worksheet corresponding to the group and account selected.
+
+Selecting a different Group with the same account will update the corresponding worksheet for the already selected month.
+
+When updating a different account, be sure to select the appropriate source file before updating.
