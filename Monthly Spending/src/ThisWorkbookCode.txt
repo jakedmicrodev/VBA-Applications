@@ -1,0 +1,5 @@
+Private Sub Workbook_Open()
+
+    frmMain.Show
+
+End Sub

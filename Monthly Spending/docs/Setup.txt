@@ -1,0 +1,61 @@
+This application works with Wells Fargo online banking web site.
+
+Log into your account and select Plan & Learn/View Spending Report.
+
+In that page under "Accounts Included in Your Report" click Edit Accounts and select each of the accounts you want included in the CSV file you will download.
+
+I chose each separate checking account along with its associated debit card for each of the separate CSV files and one with all the accounts and debit cards checked for the combined CSV file.
+
+Once you have selected the accounts go to the bottom of the right hand panel under "Get your detailed spending report" and under "Past 18 months" or "Year-End Report:20xx" and click "Download in Excel".
+
+This will download the CSV file to your browser's download folder.
+
+After you have downloaded all the account files open each one and save them as an Excel file.
+
+Create an Excel workbook that will be your Monthly Spending file and save it in the folder of your choice.
+
+I created the following folder and file structure
+Budget
+	2019
+		Source Files
+			Combined.xlsx
+			Account1.xlsx
+			Account2.xlsx
+			Account3.xlsx
+		2019 Spending.xlsx
+	2020
+		Source Files
+			Combined.xlsx
+			Account1.xlsx
+			Account2.xlsx
+			Account3.xlsx
+		2020 Spending.xlsx
+		
+Create an Excel Macro-Enabled Workbook to hold the form and macro files.
+
+Open the file and select the Developer tab. If the Developer tab is not enabled, follow the instructions in the following link
+https://support.microsoft.com/en-us/office/show-the-developer-tab-e1192344-5e56-4d45-931b-e5fd9bea2d45
+
+Once you have selected the Developer tab, click on the Visual Basic button on the left side of the ribbon or press Alt-F11 to open the Visual Basic editor.
+
+In the Visual Basic editor, right click on the VBAProject(File Name.xlsx). This is the macro file you opened the Visual Basic editor from.
+
+Select Import File... This will open an Import File dialog window to select the files you downloaded from my GitHub repository.
+
+You can only pick one at a time so select each file untill you have selected all of them.
+
+These files are frmMain.frm, modCommon.bas, modFormEvents.bas, modInitWorkbook.bas, modReports.bas.
+
+Right click on the ThisWorkbook item at the bottom of the listed files anc select View Code. This will open the edit window for this item.
+
+Open the downloaded file ThisWorkbook.txt and copy the contents. Paste the code into the ThisWorkbook code editor.
+
+Click the Save button in Excel to save the macros to the workbook.
+
+Close the Visual Basic editor window.
+
+Close the Excel Macro-Enabled Workbook you created, save the file if the Save dialog box appears.
+
+To run the application, open the Excel Macro-Enabled Workbook you created and the Monthly Spending Report form will appear centered on the workbook.
+
+	
