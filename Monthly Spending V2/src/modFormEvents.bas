@@ -35,6 +35,7 @@ Private Sub InitCommonVariables()
     Set CurrentWorkbook = Nothing
     DestinationFilePath = ""
     GroupName = ""
+    IsBlankWorkbook = True
     IsSavedAndClosed = False
     MonthsIndex = -1
     SourceFilePath = ""
@@ -368,8 +369,10 @@ Public Sub OnNewClick(frm As UserForm)
 
     On Error GoTo eh
     
-    CloseCurrentWorkbook
-    CreateNewWorkbook
+    If Not IsBlankWorkbook Then
+        CloseCurrentWorkbook
+        CreateNewWorkbook
+    End If
     
     frm.txtSelectNewSourceFile.Text = ""
     frm.lblCreateDestinationFile.Enabled = False
@@ -619,7 +622,6 @@ Public Sub ResetLabel(frm As UserForm, Caption As String)
     End If
 
     If frm.lblSelectNewSourceFile.Tag <> Caption Then
-        Debug.Print Caption
         frm.lblSelectNewSourceFile.BackColor = DEFAULT_BACKCOLOR
         frm.lblSelectNewSourceFile.BorderStyle = fmBorderStyleNone
     End If

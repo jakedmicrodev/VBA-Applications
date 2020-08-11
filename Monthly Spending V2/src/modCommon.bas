@@ -5,6 +5,7 @@ Private mAccountsIndex As Integer
 Private mAccountName As String
 Private mDestinationFilePath As String
 Private mGroupName As String
+Private mIsBlankWorkbook As Boolean
 Private mIsSavedAndClosed As Boolean
 Private mMonthsIndex As Integer
 Private mSourceFilePath As String
@@ -86,6 +87,14 @@ End Property
 
 Public Property Let GroupName(Value As String)
     mGroupName = Value
+End Property
+
+Public Property Get IsBlankWorkbook() As Boolean
+    IsBlankWorkbook = mIsBlankWorkbook
+End Property
+
+Public Property Let IsBlankWorkbook(Value As Boolean)
+    mIsBlankWorkbook = Value
 End Property
 
 Public Property Get IsSavedAndClosed() As Boolean
