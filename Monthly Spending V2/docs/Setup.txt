@@ -1,0 +1,127 @@
+Setup Monthly Spending V2 Application
+
+I created the following folder and file structure for this application
+Budget
+	2019
+		Source Files
+			Combined.xlsx
+			Account1.xlsx
+			Account2.xlsx
+			Account3.xlsx
+		2019 Spending.xlsx (file to hold the monthly spending data by category and sub-category)
+	2020
+		Source Files
+			Combined.xlsx
+			Account1.xlsx
+			Account2.xlsx
+			Account3.xlsx
+		2020 Spending.xlsx (file to hold the monthly spending data by category and sub-category)
+		
+Create an Excel file and save it as an Excel Macro-Enabled Workbook to hold the form and macro files and name it whatever you like. I named mine Monthly Spending.
+
+Open the file and select the Developer tab. If the Developer tab is not enabled, follow the instructions in the following link
+https://support.microsoft.com/en-us/office/show-the-developer-tab-e1192344-5e56-4d45-931b-e5fd9bea2d45
+
+Once you have selected the Developer tab, click on the Visual Basic button on the left side of the ribbon or press Alt-F11 to open the Visual Basic editor.
+
+In the Visual Basic editor, right click on the VBAProject(Monthly Spending.xlsm). This is the macro file you opened the Visual Basic editor from.
+
+Select Import File... This will open an Import File dialog window to select the files you downloaded from my GitHub repository.
+
+You can only pick one at a time so select each file untill you have imported all of them.
+
+These files are:
+	ErrorHandling.bas
+	frmMain.frm
+	frmMain.frx
+	modArrayFunctions.bas
+	modCommon.bas
+	modFormEvents.bas
+	modInitWorkbook.bas
+	modUpdatess.bas.
+	StringFunctions.bas
+	
+Right click on the ThisWorkbook item at the bottom of the listed files anc select View Code. This will open the edit window for this item.
+
+Open the downloaded file ThisWorkbook.txt and copy the contents. Paste the code into the ThisWorkbook code editor.
+
+Click the Save button in Excel to save the macros to the workbook.
+
+Close the Visual Basic editor window.
+
+In this workbook, create 6 worksheets. These worksheets are used by the application to initialize the Monthly Spending workbook that holds your spending data.
+	Accounts
+		The list of accounts you are getting your spending data from.
+	Groups
+		What the data is grouped by in the downloaded CSV file. These names can be changed to your local language but they must also be changed in the Worksheets entries.
+	Heading Ends
+		The heading name in A1 and N1 for each of the account worksheets. These names can be changed to your local language.
+	Months
+		The abbreviated names of the months. These names can be changed to your local language.
+	Queries
+		The SQL queries used by ADO to select the data from the Excel account files.
+	Worksheets
+
+In the Accounts worksheet, enter the following items in column A
+	A1 Account
+	A2 The name of one of your accounts
+	A3 - A... The names of each of the other accunts
+	In the last cell enter Combined for the combined accounts if there is any
+	
+In the Groups worksheet, enter the following items in column A
+	A1 Groups
+	A2 Sub Category
+	A3 Category
+	
+In the Heading Ends worksheet, enter the following items in column A
+	A1 A1 and N1
+	A2 Category
+	A3 Total
+	
+In the Months worksheet, enter the following items in column A
+	A1 Jan
+	A2 Feb
+	...
+	A12 Dec
+	
+In the Queries worksheet, enter the following items in columns A and B
+	A1 QueryName
+	B1 Query
+	A2 Category
+	B2 SELECT [Master Category] FROM [Spending$] GROUP BY [Master Category]
+	A3 Sub Category	
+	B3 SELECT [SubCategory] FROM [Spending$] GROUP BY [SubCategory]
+	A4 Temp Category
+	B4 SELECT [Master Category], Sum([Amount]) FROM [Spending$] WHERE [Date] Between #%1# And #%2# GROUP BY [Master Category]
+	A5 Temp Sub Category
+	B5 SELECT [SubCategory], Sum([Amount]) FROM [Spending$] WHERE [Date] Between #%1# And #%2# GROUP BY [SubCategory]
+	A6 Join Category
+	B6 SELECT cl.[Category], t.[Amount] FROM [List - Category$] AS cl LEFT JOIN [Temp$] AS t ON cl.[Category] = t.[Category]
+	A7 Join Sub Category
+	B7 SELECT cl.[Category], t.[Amount] FROM [List - Sub Category$] AS cl LEFT JOIN [Temp$] AS t ON cl.[Category] = t.[Category]
+
+In the Worksheets worksheet, enter the following items in column A
+	A1 Worksheet
+	A2 Temp
+	A3 List - Sub Category
+	A4 List - Category
+	A5 Account3 - Sub Category (Change Account3 name to whatever you saved the downloaded renamed account CSV to Excel file)
+	A6 Account2 - Sub Category (Change Account2 name to whatever you saved the downloaded renamed account CSV to Excel file)
+	A7 Account1 - Sub Category (Change Account1 name to whatever you saved the downloaded renamed account CSV to Excel file)
+	A8 Combined - Sub Category
+	A9 Account3 - Category (Change Account3 name to whatever you saved the downloaded renamed account CSV to Excel file)
+	A10 Account2 - Category (Change Account2 name to whatever you saved the downloaded renamed account CSV to Excel file)
+	A11 Account1 - Category (Change Account1 name to whatever you saved the downloaded renamed account CSV to Excel file)
+	A12 Combined - Category
+
+	If you only have one checking account with a debit card associated with it, that is your Account1 entry. Therefore you would have
+	A1 Worksheet
+	A2 Temp
+	A3 List - Sub Category
+	A4 List - Category
+	A5 Account1 - Sub Category (Change Account3 name to whatever you saved the downloaded renamed account CSV to Excel file)
+	A6 Account1 - Category (Change Account1 name to whatever you saved the downloaded renamed account CSV to Excel file)
+		
+Close the Excel Macro-Enabled Workbook you created, save the file if the Save dialog box appears.
+
+To run the application, open the Excel Macro-Enabled Workbook you created and the Monthly Spending Report form will appear centered on the workbook.
