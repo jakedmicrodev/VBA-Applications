@@ -21,11 +21,18 @@ Private Sub CreateNewWorkbook()
     
     Set CurrentWorkbook = Workbooks.Add
     DestinationFilePath = Application.path & Application.PathSeparator & ActiveWorkbook.FullName
-
+    IsBlankWorkbook = True
+    
     Exit Sub
     
 eh:
     RaiseError Err.Number, Err.Source, "modFormEvents.CreateNewWorkbook", Err.Description, 21
+End Sub
+
+Private Sub EnableSourceFileFrame(frm As UserForm, isVisible As Boolean)
+    frm.txtSelectNewSourceFile.Text = ""
+    frm.lblCreateDestinationFile.Enabled = False
+    frm.fraNewFile.Visible = isVisible
 End Sub
 
 Private Sub InitCommonVariables()
@@ -82,6 +89,39 @@ Private Sub SaveAndCloseWorkbook()
 eh:
     RaiseError Err.Number, Err.Source, "modFormEvents.SaveAndCloseWorkbook", Err.Description, 432
 End Sub
+
+Private Function CheckIsBlankWorkbook() As Boolean
+    
+    On Error GoTo eh
+    
+    Dim wb As Workbook
+    Set wb = CurrentWorkbook
+    
+    Dim i As Integer
+    Dim isBlank As Boolean
+    isBlank = False
+    
+    If wb.Worksheets.Count > 3 Then
+        CheckIsBlankWorkbook = isBlank
+    Else
+        For i = 1 To wb.Worksheets.Count
+            If wb.Worksheets(i).Name = "Sheet" & i Then
+                isBlank = isBlank Or True
+            End If
+        Next
+    End If
+    
+    CheckIsBlankWorkbook = isBlank
+    
+cleanup:
+    Set wb = Nothing
+    Exit Function
+    
+eh:
+    RaiseError Err.Number, Err.Source, "modFormEvents.CheckIsBlankWorkbook", Err.Description, 91
+    GoTo cleanup
+    
+End Function
 
 Private Function ValidateFilePath(thisPath As String) As Boolean
     'PURPOSE: Function to determine if a File exists on the user's Computer
@@ -156,9 +196,10 @@ eh:
     DisplayError Err.Source, Err.Description, "modFormEvents.OnCategoryClick", 79
 End Sub
 
-Public Sub OnCloseClick()
+Public Sub OnCloseClick(frm As UserForm)
 
     CloseCurrentWorkbook
+    EnableSourceFileFrame frm, False
 
 End Sub
 
@@ -374,9 +415,7 @@ Public Sub OnNewClick(frm As UserForm)
         CreateNewWorkbook
     End If
     
-    frm.txtSelectNewSourceFile.Text = ""
-    frm.lblCreateDestinationFile.Enabled = False
-    frm.fraNewFile.Visible = True
+    EnableSourceFileFrame frm, True
     
     Exit Sub
     
@@ -395,6 +434,7 @@ Public Sub OnOpenClick(frm As UserForm)
         DestinationFilePath = filePath
         CloseCurrentWorkbook
         Set CurrentWorkbook = Workbooks.Open(DestinationFilePath)
+        IsBlankWorkbook = CheckIsBlankWorkbook()
     End If
     
     Exit Sub
@@ -407,6 +447,8 @@ Public Function OnQueryClose() As VbMsgBoxResult
     
     Dim wb As Workbook
     Set wb = CurrentWorkbook
+    
+    If wb Is Nothing Then Exit Function
     
     Dim retVal As VbMsgBoxResult
     If Not wb.Saved Then
@@ -509,7 +551,7 @@ Public Sub OnSelectNewSourceFileClick(frm As UserForm)
     Dim filePath As String
     filePath = Application.GetOpenFilename(filefilter:=EXCEL_FILTER, Title:="Open")
     
-    If filePath <> "" Then
+    If filePath <> "False" Then
         frm.txtSelectNewSourceFile.Text = filePath
         frm.txtSourceFilePath.Text = filePath
         SourceFilePath = filePath
