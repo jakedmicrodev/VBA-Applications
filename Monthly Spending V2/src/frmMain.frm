@@ -61,7 +61,7 @@ End Sub
 
 Private Sub lblClose_Click()
 
-    OnCloseClick
+    OnCloseClick Me
     Me.Caption = SetMainFormCaption()
     EnableFormControls Me
     
